@@ -87,6 +87,23 @@ export const localeAwareUpperCase = (text: string) => {
     : text.toUpperCase()
 }
 
+const dateToGameIndex = (date: number) => {
+  const epochMs = new Date(2021, 11, 31).valueOf()
+  const msInDay = 86400000
+  const index = Math.floor((date - epochMs) / msInDay)
+
+  return index
+}
+
+const tryFindSpecialDay = (currentIndex: number) => {
+  const margoBDay = new Date(2022, 4, 4).valueOf() // month is 0 based index
+
+  if (dateToGameIndex(margoBDay) === currentIndex) {
+    return '54321'
+  }
+  return null
+}
+
 export const getWordOfDay = () => {
   // January 1, 2022 Game Epoch
   const epochMs = new Date(2022, 0).valueOf()
@@ -95,8 +112,11 @@ export const getWordOfDay = () => {
   const index = Math.floor((now - epochMs) / msInDay)
   const nextday = (index + 1) * msInDay + epochMs
 
+  const specialDaySolution = tryFindSpecialDay(index)
+
   return {
-    solution: getTodaysTopFive(index),
+    solution:
+      specialDaySolution != null ? specialDaySolution : getTodaysTopFive(index),
     solutionIndex: index,
     tomorrow: nextday,
   }
