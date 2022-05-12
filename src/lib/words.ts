@@ -97,9 +97,12 @@ const dateToGameIndex = (date: number) => {
 
 const tryFindSpecialDay = (currentIndex: number) => {
   const margoBDay = new Date(2022, 4, 4).valueOf() // month is 0 based index
+  const gerritBDay = new Date(2022, 4, 12).valueOf()
 
   if (dateToGameIndex(margoBDay) === currentIndex) {
     return '54321'
+  } else if (dateToGameIndex(gerritBDay) === currentIndex) {
+    return '34721'
   }
   return null
 }
